@@ -62,25 +62,6 @@
             text-transform: uppercase;
         }
 
-        .scripts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 24px;
-        }
-
-        @media (max-width: 600px) {
-  body {
-    padding: 24px 16px 48px 16px;
-  }
-
-  .scripts-grid {
-    grid-template-columns: 1fr;       /* one card per row */
-  }
-
-  .script-card {
-    padding: 20px;                    /* less padding on mobile */
-  }
-}
         .script-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -94,6 +75,115 @@
             overflow: visible; 
         }
 
+
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 24px;
+        }
+
+       @media (max-width: 600px) {
+    body {
+        padding: 24px 12px 48px 12px;
+    }
+
+    h1 { 
+        font-size: 1.25rem; 
+        line-height: 1.1;
+        margin-top: 45px;
+        margin-bottom: 2px;
+    }
+
+    .subtitle {
+        font-size: 0.55rem;
+        margin-top: 4px;
+    }
+
+    .scripts-grid {
+        grid-template-columns: 1fr;
+        justify-items: start;
+        gap: 20px; /* Increased gap to make room for the arrow tab below */
+    }
+
+    .script-card {
+        width: 85%; 
+        padding: 6px 14px; /* Reduced vertical padding further */
+        min-height: 55px; /* Shaved off more height for a tighter rectangle */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0;
+        margin-right: auto;
+        border-radius: 3px 3px 0 3px; 
+        overflow: visible; 
+        position: relative;
+    }
+
+    /* Smaller card title */
+    .script-card h2 {
+        font-size: 0.75rem; /* Reduced from 0.85rem */
+        margin: 0;
+        letter-spacing: 0.2px;
+    }
+
+    /* Smaller tag */
+    .tag {
+        font-size: 0.45rem;
+        padding: 1px 3px;
+    }
+
+    /* Smaller description text */
+    .script-card > p {
+        font-size: 0.6rem; /* Reduced from 0.65rem */
+        line-height: 1.1;
+        margin-top: 1px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden; 
+        opacity: 0.8;
+    }
+
+    /* Adjust the mini-square arrow to match the smaller text */
+    .script-card::after {
+        content: "▼";
+        position: absolute;
+        bottom: -14px; 
+        right: -1px; 
+        width: 26px; /* Slightly narrower */
+        height: 14px; 
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-top: none; 
+        border-radius: 0 0 3px 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.5rem;
+        color: var(--text-muted);
+        z-index: 10;
+    }
+
+    /* Tighter spacing for the expanded content drawer */
+    .script-card.active .content-drawer {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .meta-item p {
+        font-size: 0.65rem;
+    }
+
+    h4 {
+        font-size: 0.55rem;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 0.65rem;
+    }
+}
+        
         /* --- Individual Card Canvas --- */
         .card-particles {
             position: absolute;
