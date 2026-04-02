@@ -3,153 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scripts Hub // Dhruv</title>
+    <title>Dhruv Vaishnav | Portfolio</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="description" content="The portfolio of Dhruv Vaishnav, a passionate software engineering student specializing in creative and dynamic web solutions.">
+    <meta name="keywords" content="Dhruv Vaishnav, Portfolio, Software Engineer, Web Developer, Frontend Developer">
+    
+    <link rel="icon" type="image/png" href="static/images/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&amp;display=swap" rel="stylesheet">
+    
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
     
-    <style>
-        :root {
-            --bg: #000000; --surface: #111111; --border: #333333;
-            --text-main: #ededed; --text-muted: #888888;
-            --brand-blue: #ffffff; --title-shadow: rgba(255, 255, 255, 0.1);
-        }
-        body.light-theme {
-            --bg: #ffffff; --surface: #fafafa; --border: #eaeaea;
-            --text-main: #171717; --text-muted: #666666;
-            --brand-blue: #1976d2; --title-shadow: rgba(25, 118, 210, 0.2);
-        }
-        body {
-            background-color: var(--bg); color: var(--text-main);
-            font-family: 'Inter', sans-serif; margin: 0; padding: 40px 10% 80px 10%;
-            transition: background 0.3s ease;
-        }
-        header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 60px; text-align: center; }
-        h1 { font-size: 2.8rem; font-weight: 700; color: var(--brand-blue); text-shadow: 0 2px 10px var(--title-shadow); margin: 0; }
-        .subtitle { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 4px; }
-        
-        .scripts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px; }
-
-        /* --- THE CARD --- */
-        .script-card {
-            background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-            padding: 14px 20px; cursor: pointer; transition: all 0.3s ease;
-            min-height: 85px; position: relative; z-index: 1;
-        }
-        .script-card:hover { border-color: #1976d2; transform: translateY(-3px); }
-        .script-card.active { border-color: #1976d2; box-shadow: 0 10px 30px rgba(25, 118, 210, 0.15); z-index: 10; }
-
-        .script-card h2 { font-size: 1.05rem; margin: 0; font-weight: 700; pointer-events: none; }
-        .card-desc { color: #1976d2; font-weight: 500; font-size: 0.78rem; margin-top: 4px; pointer-events: none; }
-        .tag { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; background: var(--border); padding: 2px 6px; border-radius: 3px; margin-bottom: 6px; color: var(--text-muted); display: inline-block; pointer-events: none; }
-
-        /* --- DRAWER --- */
-        .content-drawer {
-            display: none; padding-top: 18px; margin-top: 15px; border-top: 1px solid var(--border);
-        }
-        .script-card.active .content-drawer { display: block; }
-
-        .meta-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px; }
-        .meta-item h4 { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); margin: 0 0 4px 0; }
-        .meta-item p { font-size: 0.82rem; margin: 0; }
-
-        .btn {
-            background: var(--text-main); color: var(--bg); border: none; padding: 10px; width: 100%;
-            font-weight: 700; font-size: 0.75rem; cursor: pointer; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s;
-        }
-        .btn.success { background: #1976d2 !important; color: #ffffff !important; }
-
-        .theme-toggle { position: fixed; top: 30px; right: 30px; background: var(--surface); border: 1px solid var(--border); color: var(--text-main); padding: 10px; cursor: pointer; border-radius: 50%; z-index: 100; }
-
-        @media (max-width: 768px) { .scripts-grid { grid-template-columns: 1fr; } }
-    </style>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
-<body class="light-theme">
+<body class="intro-active">
 
-    <button class="theme-toggle" onclick="document.body.classList.toggle('light-theme')">
-        <i class="ri-contrast-2-line"></i>
-    </button>
+    <div id="intro-overlay">
+    <div id="formula-container"></div>
+    <div class="intro-sequence">
+        <div id="intro-era" class="intro-small-text"></div>
+        <div id="intro-presents" class="intro-small-text"></div>
+        <h1 id="intro-text" aria-live="assertive"></h1>
+    </div>
+</div>
 
-    <header>
-        <h1>Scripts Hub</h1>
-        <div class="subtitle">System Automation & Logic Archive // v1.1.0</div>
-    </header>
+    <div class="theme-selector-container">
+        <button class="theme-toggle" id="theme-toggle-btn" aria-label="Open theme selector" aria-expanded="false">
+            <svg class="icon-theme" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 18C13.0609 18 14.0783 17.5786 14.8284 16.8284C15.5786 16.0783 16 15.0609 16 14C16 11.7909 14.2091 10 12 10V18Z"></path>
+            </svg>
+        </button>
+        <div class="theme-options" id="theme-options-menu" role="menu">
+            <button class="theme-option-btn" role="menuitem" data-theme="theme-lucid-blue">
+                <span class="theme-swatch" style="background: linear-gradient(to bottom, #ffffff, #bbdefb);"></span>
+                Lucid Blue
+            </button>
+            <button class="theme-option-btn" role="menuitem" data-theme="theme-metallic-sky">
+                <span class="theme-swatch" style="background-color: #111827;"></span>
+                Metallic Sky
+            </button>
+        </div>
+    </div>
 
-    <main>
-        <div class="scripts-grid" id="scripts-container"></div>
-    </main>
+    <section class="hero" id="home">
+        <canvas id="particle-canvas"></canvas>
+        <header class="hero-content">
+            <h1 class="hero-headline">
+                <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
+            </h1>
+            <p class="hero-subheadline" id="subheadline">
+                A passionate Software Engineering Student, building intelligent systems that speak for themselves.
+            </p>
+        </header>
+        <div class="scroll-indicator">
+            <a href="#about-me" aria-label="Scroll down to about me section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </a>
+        </div>
+    </section>
+    
+    <section class="about-me" id="about-me">
+        <canvas id="background-canvas"></canvas>
+        <div class="about-me-container">
+            <h2 class="section-title">About Me</h2>
+            <p class="bio-text">
+                Hi, I'm Dhruv Vaishnav, a passionate software engineering student with a love for crafting elegant solutions to complex problems. My journey in technology is driven by a relentless curiosity and a desire to build applications that are not only functional but also intuitive and impactful.
+            </p>
 
-    <script>
-        const CONTAINER = document.getElementById('scripts-container');
-
-        async function addScriptCard(filePath) {
-            try {
-                const response = await fetch(filePath);
-                const text = await response.text();
-                const [metaSection, codeSection] = text.split('---');
-                const meta = {};
-                metaSection.trim().split('\n').forEach(line => {
-                    const [key, ...value] = line.split(': ');
-                    if (key) meta[key.trim()] = value.join(': ').trim();
-                });
-
-                const card = document.createElement('div');
-                card.className = 'script-card';
-                
-                // Add Content
-                card.innerHTML = `
-                    <div class="tag">${meta.TAG || '0x000'}</div>
-                    <h2>${meta.TITLE || 'Untitled'}</h2>
-                    <p class="card-desc">${meta.DESC || 'No description.'}</p>
-                    <div class="content-drawer">
-                        <div class="meta-group">
-                            <div class="meta-item"><h4>Requirements</h4><p>${meta.REQS || 'None'}</p></div>
-                            <div class="meta-item"><h4>Operation</h4><p>${meta.OPER || 'Standard'}</p></div>
+            <div class="project-cards">
+                <div id="crypto-card" class="project-card has-details" style="background-image: url('static/images/matrixl.jpg');">
+                    <div class="project-content">
+                        <h3>Cryptography System</h3>
+                        <p>A web-based tool for text encryption and decryption using various classical and modern cryptographic algorithms.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">HTML/CSS</span>
                         </div>
-                        <button type="button" class="btn copy-btn"><i class="ri-file-copy-line"></i> Copy Source Code</button>
+                        <div class="project-links">
+                            <a href="static/cryptography/index.html" class="project-btn" target="_blank">View Project</a>
+                        </div>
                     </div>
-                `;
+                </div>
 
-                // ISOLATED TOGGLE LOGIC
-                card.addEventListener('click', function(e) {
-                    // 1. If we clicked the button, ignore this
-                    if (e.target.closest('.copy-btn')) return;
+                <div id="portfolio-card" class="project-card has-details" style="background-image: url('static/images/planetl.jpg');">
+                    <div class="project-content">
+                        <h3>Personal Portfolio</h3>
+                        <p>The dynamic and interactive website you are currently exploring, built from scratch with a focus on design and performance.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Dhruv-ver2/Projects/tree/main/Myportfolio" class="project-btn" target="_blank" rel="noopener noreferrer">View Project</a>
+                        </div>
+                    </div>
+                </div>
 
-                    // 2. Check if this card is already active
-                    const isActive = this.classList.contains('active');
+                <div id="judo-card" class="project-card has-details" style="background-image: url('static/images/ai1l.jpg');">
+                    <div class="project-content">
+                        <h3>Judo: A Discord Bot</h3>
+                        <p>A unique utility bot for server moderation, management, entertainment, and advanced security protocols.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">SQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="static/judo/index.html" class="project-btn" target="_blank">View Project</a>
+                        </div>
+                    </div>
+                </div>
 
-                    // 3. CLOSE ALL CARDS FIRST (Prevents simultaneous expansion)
-                    document.querySelectorAll('.script-card').forEach(c => c.classList.remove('active'));
+                <div id="top-secret-card" class="project-card project-card--placeholder" style="background-image: url('static/images/tabbystarl.jpg');">
+                    <div class="project-content">
+                        <h3>Top Secret</h3>
+                        <p>Coming soon...</p>
+                    </div>
+                </div>
+            </div>
 
-                    // 4. If the clicked card wasn't active, open it
-                    if (!isActive) {
-                        this.classList.add('active');
-                    }
-                });
+            <button class="more-info-toggle" id="more-info-btn" aria-expanded="false" aria-controls="more-info-content">
+                More About Me
+            </button>
 
-                // ISOLATED COPY LOGIC
-                const btn = card.querySelector('.copy-btn');
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Stop event from bubbling to card
-                    navigator.clipboard.writeText(codeSection.trim()).then(() => {
-                        const original = btn.innerHTML;
-                        btn.classList.add('success');
-                        btn.innerHTML = `<i class="ri-check-line"></i> COPIED SUCCESSFULLY!`;
-                        setTimeout(() => {
-                            btn.classList.remove('success');
-                            btn.innerHTML = original;
-                        }, 2000);
-                    });
-                });
+            <div class="more-info-content" id="more-info-content" role="region" aria-hidden="true">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-date">2023</span>
+                        <h4 class="timeline-title">Embarking on My Tech Journey</h4>
+                        <p class="timeline-description">Introduced to Computer Science in 11th standard at AECS No. 2, a CBSE institution. Developed foundational knowledge in CS principles and cultivated a passion for Python programming and algorithmic problem-solving. By 12th standard, I had committed to pursuing a career in technology and began my B.Tech in Computer Science Engineering.</p>
+                    </div>
 
-                CONTAINER.appendChild(card);
-            } catch (err) { console.error("Error loading card:", err); }
-        }
+                    <div class="timeline-item">
+                        <span class="timeline-date">2024</span>
+                        <h4 class="timeline-title">Stepping Into Professional Education</h4>
+                        <p class="timeline-description">After achieving commendable results in the CBSE board exams, I secured admission to Modi Institute of Technology (MIT) to pursue a B.Tech degree in Computer Science Engineering. This marked the beginning of my formal higher education journey in technology.</p>
+                    </div>
 
-        // Add your files
-        addScriptCard('/static/scripts/vocal_greeting.txt');
-        addScriptCard('/static/scripts/window_purification.txt');
-    </script>
+                    <div class="timeline-item">
+                        <span class="timeline-date">2025</span>
+                        <h4 class="timeline-title">Building Core Competencies</h4>
+                        <p class="timeline-description">Focused on strengthening expertise in Python, Data Structures & Algorithms (DSA), and critical problem-solving methodologies. Developed my first major project, a Cryptography System, while planning future initiatives including a personal portfolio website and an auto-moderation Discord bot. Completed and earned certification in Google IT Automation with Python from Coursera.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-date">2026</span>
+                        <h4 class="timeline-title">Bringing Vision to Life</h4>
+                        <p class="timeline-description">Initiated intensive development of my personal portfolio webpage with dynamic features and interactive design. Simultaneously, architected and deployed JUDO, a sophisticated Discord bot from scratch, showcasing expertise in bot development, server moderation, and advanced automation features.</p>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="action-buttons">
+                <a href="static/Dhruv_Vaishnav_Resume.pdf" class="download-resume-btn" id="view-resume-btn" target="_blank" rel="noopener noreferrer">View Resume</a>
+    
+                <a href="static/Dhruv_Vaishnav_Resume.pdf"class="download-resume-btn"id="resume-btn"download="Dhruv_Vaishnav_Resume.pdf"target="_blank"rel="noopener noreferrer">Download Resume</a>
+                
+                <a href="contact/index.html" class="download-resume-btn">Contact Me</a>
+            </div>
+
+            <div class="public-vault-wrapper" id="public-vault" style="margin-top: 12rem; position: relative; z-index: 2;">
+                <h2 class="section-title">Public Vault</h2>
+                <p class="vault-subtitle" style="margin-bottom: 3rem; opacity: 0.7;">A collection of open-source tools, automation scripts, and creative narratives.</p>
+                
+                <div class="vault-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <a href="scripts-hub/index.html" target="_blank" class="vault-card" id="vault-scripts">
+                        <div class="vault-content">
+                            <i class="ri-terminal-box-line"></i>
+                            <h3>Scripts Hub</h3>
+                            <p>Automated Python tools, system utilities, and logic-heavy scripts for developers.</p>
+                            <span class="vault-link-text">Access Toolset <i class="ri-arrow-right-up-line"></i></span>
+                        </div>
+                    </a>
+
+                    <div class="vault-card vault-card--locked" id="vault-manga">
+                        <div class="vault-content">
+                            <i class="ri-book-open-line"></i>
+                            <h3>Books Panel</h3>
+                            <p>Currently locked. Releasing soon.</p>
+                            <span class="vault-link-text">Access Denied</span>
+                        </div>
+                    </div>
+
+                    <div class="vault-card vault-card--locked">
+                        <div class="vault-content">
+                            <i class="ri-lock-password-line"></i>
+                            <h3>Encrypted</h3>
+                            <p>New venture currently in development. Decryption pending...</p>
+                            <span class="vault-link-text">Stay Tuned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-socials">
+                <a href="https://github.com/Dhruv-022" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="GitHub">
+                    <i class="ri-github-fill"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/dhruv-vaishnav-102044375" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="LinkedIn">
+                    <i class="ri-linkedin-box-fill"></i>
+                </a>
+            </div>
+
+            <div class="footer-email">
+                <a href="mailto:dhruvvaishnav9321@gmail.com" class="footer-link email-link">
+                    dhruvvaishnav9321@gmail.com
+                </a>
+            </div>
+            
+            <p class="footer-copyright">© 2026 Dhruv Vaishnav. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="static/js/script.js"></script>
 </body>
 </html>
