@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded shadow-sm border-start border-primary border-5">
+                <div>
+                    <h2 class="mb-0 fw-bold">Doctor Dashboard</h2>
+                    <p class="text-muted mb-0">Logged in as: <strong>{{ request.user.username }}</strong></p>
+                </div>
+                <div class="text-end">
+                    <span class="badge bg-primary rounded-pill px-3">Active Session</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow border-0 mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="bi bi-calendar-plus"></i> Set Working Hours</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-uppercase text-secondary">1. Select Date</label>
+                            {{ form.date }}
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label fw-bold small text-uppercase text-secondary">Start Time</label>
+                                {{ form.start_t }}
+                            </div>
+                            <div class="col">
+                                <label class="form-label fw-bold small text-uppercase text-secondary">End Time</label>
+                                {{ form.end_t }}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-uppercase text-secondary">Max Patients for this slot</label>
+                            {{ form.max_patients }}
+                            <div class="form-text small text-muted">How many patients can book this time block?</div>
+                        </div>
+
+                        <div class="p-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded mb-4">
+                            <label class="form-label fw-bold small text-uppercase text-danger mb-2">
+                                <i class="bi bi-exclamation-octagon-fill"></i> 2. Emergency Configuration
+                            </label>
+                            
+                            <div class="mb-3">
+                                <label class="small text-muted mb-1">Emergency Status/Reason</label>
+                                {{ form.emergency_note }}
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <label class="small text-muted mb-1">Emerg. From</label>
+                                    {{ form.emergency_start }}
+                                </div>
+                                <div class="col">
+                                    <label class="small text-muted mb-1">Emerg. To</label>
+                                    {{ form.emergency_end }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow">
+                            PUBLISH AVAILABILITY
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Your Published Schedule</h5>
+                    <span class="badge bg-secondary">{{ slots.count }} Slots</span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for slot in slots %}
+                        <li class="list-group-item p-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="fw-bold text-primary mb-0 me-3">
+                                            {{ slot.start_time|date:"D, M d" }}
+                                        </h6>
+                                        <span class="fw-bold">
+                                            {{ slot.start_time|time:"H:i" }} — {{ slot.end_time|time:"H:i" }}
+                                        </span>
+                                    </div>
+
+                                    {% if slot.emergency_note and slot.emergency_start %}
+                                        <div class="mt-1">
+                                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 py-1 px-2" style="font-size: 0.75rem;">
+                                                <i class="bi bi-lightning-fill"></i> ACCEPTING EMERGENCIES
+                                            </span>
+                                            <small class="text-muted ms-2">({{ slot.emergency_start|time:"H:i" }} - {{ slot.emergency_end|time:"H:i" }})</small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="text-end">
+                                    <div class="fw-bold fs-5 mb-0">{{ slot.current_bookings }} / {{ slot.max_patients }}</div>
+                                    <small class="text-muted d-block mb-1 text-uppercase fw-bold" style="font-size: 0.65rem;">Patients Booked</small>
+                                    
+                                    {% if slot.is_full %}
+                                        <span class="badge bg-danger rounded-pill px-3">FULL CAPACITY</span>
+                                    {% else %}
+                                        <span class="badge bg-success rounded-pill px-3">ACTIVE</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center py-5 text-muted">
+                            No slots added for this period.
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f4f7f6; }
+    .card { border-radius: 12px; }
+    .form-control { border-radius: 8px; padding: 10px; border: 1px solid #dee2e6; }
+    .form-control:focus { border-color: #0d6efd; box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.05); }
+    .list-group-item { transition: all 0.2s; }
+    .list-group-item:hover { background-color: #fcfdfe; }
+</style>
+{% endblock %}
