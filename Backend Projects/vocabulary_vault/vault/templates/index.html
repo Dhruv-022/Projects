@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Vocabulary Vault</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; color: #333;">
+
+    <h1 style="color: #2c3e50; text-align: center;">📓 Smart Vocabulary Vault (Manual CRUD)</h1>
+    
+    <div style="display: flex; gap: 40px; margin-top: 30px;">
+        
+        <div style="flex: 1; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h3 style="margin-top: 0; color: #2980b9;">➕ Add New Word Card</h3>
+            
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+                <p>
+                    <label>Vocabulary Word:</label><br>
+                    <input type="text" name="form_word" required placeholder="e.g., Ephemeral" style="width: 95%; padding: 6px;">
+                </p>
+                
+                <p>
+                    <label>Part of Speech:</label><br>
+                    <select name="form_type" style="width: 100%; padding: 6px;">
+                        <option value="Noun">Noun</option>
+                        <option value="Verb">Verb</option>
+                        <option value="Adjective">Adjective</option>
+                        <option value="Adverb">Adverb</option>
+                        <option value="Technical">Technical/Coding</option>
+                    </select>
+                </p>
+                
+                <p>
+                    <label>Meaning/Definition:</label><br>
+                    <textarea name="form_meaning" rows="3" required placeholder="What does it mean?" style="width: 95%; padding: 6px;"></textarea>
+                </p>
+                
+                <p>
+                    <label>Example Sentence (Optional):</label><br>
+                    <textarea name="form_example" rows="2" placeholder="Use it in a sentence..." style="width: 95%; padding: 6px;"></textarea>
+                </p>
+                
+                <button type="submit" style="width: 100%; background: #2980b9; color: white; border: none; padding: 10px; font-weight: bold; border-radius: 4px; cursor: pointer;">Vault It!</button>
+            </form>
+        </div>
+
+        <div style="flex: 2;">
+            <h3 style="margin-top: 0; color: #2c3e50;">📚 Memorized Collection ({{ words.count }} terms)</h3>
+            
+            {% for item in words %}
+                <div style="background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 5px solid #2980b9;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2 style="margin: 0; color: #2c3e50;">{{ item.word }} <span style="font-size: 14px; color: #95a5a6; background: #ecf0f1; padding: 3px 8px; border-radius: 12px;">{{ item.word_type }}</span></h2>
+                        <div>
+                            <a href="/update-word/{{ item.id }}/" style="color: #3498db; text-decoration: none; font-weight: bold; margin-right: 15px;">✏️ Edit</a>
+                            <a href="/delete-word/{{ item.id }}/" style="color: #e74c3c; text-decoration: none; font-weight: bold;">❌ Remove</a>
+                        </div>
+                    </div>
+                    <p style="margin: 10px 0; color: #555;"><strong>Meaning:</strong> {{ item.meaning }}</p>
+                    {% if item.example_sentence %}
+                        <p style="margin: 5px 0; color: #7f8c8d; font-style: italic;">"{{ item.example_sentence }}"</p>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p style="color: gray; text-align: center;">Your vocabulary vault is empty. Add a word card!</p>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

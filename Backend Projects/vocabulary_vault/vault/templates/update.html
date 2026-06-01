@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Word Card</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 60px;">
+
+    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+        <h2>✏️ Edit Word Definition</h2>
+        <p>Modifying stored term card: <strong>{{ word_record.word }}</strong></p>
+        <hr>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <p>
+                <label>Part of Speech:</label><br>
+                <select name="form_type" style="width: 100%; padding: 6px;">
+                    <option value="Noun" {% if word_record.word_type == "Noun" %}selected{% endif %}>Noun</option>
+                    <option value="Verb" {% if word_record.word_type == "Verb" %}selected{% endif %}>Verb</option>
+                    <option value="Adjective" {% if word_record.word_type == "Adjective" %}selected{% endif %}>Adjective</option>
+                    <option value="Adverb" {% if word_record.word_type == "Adverb" %}selected{% endif %}>Adverb</option>
+                    <option value="Technical" {% if word_record.word_type == "Technical" %}selected{% endif %}>Technical/Coding</option>
+                </select>
+            </p>
+
+            <p>
+                <label>Meaning/Definition:</label><br>
+                <textarea name="form_meaning" rows="3" required style="width: 95%; padding: 6px;">{{ word_record.meaning }}</textarea>
+            </p>
+
+            <p>
+                <label>Example Sentence:</label><br>
+                <textarea name="form_example" rows="2" style="width: 95%; padding: 6px;">{{ word_record.example_sentence }}</textarea>
+            </p>
+            
+            <div style="margin-top: 20px; display: flex; gap: 15px;">
+                <button type="submit" style="background: #d35400; color: white; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer;">Save Modifications</button>
+                <a href="/" style="background: #95a5a6; color: white; text-decoration: none; padding: 10px 20px; font-weight: bold;">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
