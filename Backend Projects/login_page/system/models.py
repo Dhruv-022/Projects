@@ -1,3 +1,5 @@
+#Here is an error to be resolved
+
 from django.db import models
 
 class CustomUser(models.Model):
