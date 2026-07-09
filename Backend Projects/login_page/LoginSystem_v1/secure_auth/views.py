@@ -11,6 +11,17 @@ def signup_step1_view(request):
         lname = request.POST.get("last_name")
         user_email = request.POST.get("email")
         
+        # 🛡️ 1.5. Security Perimeter: Reject if email already belongs to an active user
+        if UserAccount.objects.filter(email=user_email, active_status=True).exists():
+            return render(request, "secure_auth/signup_step1.html", {
+                "error_message": "This email address is already registered inside our system.",
+                "typed_fname": fname,
+                "typed_lname": lname
+            })
+            
+        # 🧹 Cleanup: Delete unactivated/stale sessions trying to use the same email
+        UserAccount.objects.filter(email=user_email, active_status=False).delete()
+        
         # 2. Generate a random 6-digit string code
         generated_otp = str(random.randint(100000, 999999))
         
@@ -38,7 +49,6 @@ def signup_step1_view(request):
         return redirect("verify_otp")
         
     return render(request, "secure_auth/signup_step1.html")
-
 
 
 # Add this function to the bottom of your secure_auth/views.py file:
